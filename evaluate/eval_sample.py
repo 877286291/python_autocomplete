@@ -85,7 +85,7 @@ def _remove_empty_lines(parsed: List[tokenizer.ParsedToken]) -> List[tokenizer.P
 def evaluate(predictor: Predictor, text: str):
     stripped, prompt = predictor.rstrip(text)
     rest = text[len(stripped):]
-    prediction_complete = NextWordPredictionComplete(rest, 4)
+    prediction_complete = NextWordPredictionComplete(rest, 3)
     prompt = torch.tensor(prompt, dtype=torch.long).unsqueeze(-1)
 
     predictions = predictor.get_next_word(prompt, None, rest, [1.], prediction_complete, 10)
