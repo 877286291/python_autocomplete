@@ -88,9 +88,9 @@ def evaluate(predictor: Predictor, text: str):
     prediction_complete = NextWordPredictionComplete(rest, 3)
     prompt = torch.tensor(prompt, dtype=torch.long).unsqueeze(-1)
 
-    predictions = predictor.get_next_word(prompt, None, rest, [1.], prediction_complete, 100)
+    predictions = predictor.get_next_word(prompt, None, rest, [1.], prediction_complete, 10)
     predictions.sort(key=lambda x: -x.prob)
-    results = [pred.text[len(rest):] for pred in predictions[:10]]
+    results = [pred.text[len(rest):] for pred in predictions]
     # print(results)
     return results
 
