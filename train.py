@@ -129,6 +129,17 @@ def lstm_model(c: Configs):
 
 
 @option(Configs.model)
+def transformer_model(c: Configs):
+    from models.transformer import TransformerModel
+    m = TransformerModel(n_tokens=c.n_tokens,
+                         d_model=c.d_model,
+                         encoder=c.transformer.encoder,
+                         src_embed=c.transformer.src_embed)
+
+    return m.to(c.device)
+
+
+@option(Configs.model)
 def transformer_xl_model(c: Configs):
     from labml_nn.transformers.xl import RelativeMultiHeadAttention
     from labml_nn.transformers.feed_forward import FeedForward
