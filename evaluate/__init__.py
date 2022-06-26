@@ -2,13 +2,14 @@ from typing import Any, Tuple, List, NamedTuple
 
 import torch
 import torch.nn
-from torch import nn
-
 from labml import monit
 from labml_helpers.module import Module
+from torch import nn
+
 from dataset import Tokenizer
 from evaluate.beam_search import PredictionComplete, BeamSearch, BeamSearchSimple
 from evaluate.beam_search_lengthy import BeamSearchLengthy
+from evaluate.beam_search_word import BeamSearchWord
 from train import StateUpdater
 
 
@@ -51,14 +52,15 @@ class Predictor:
                       prediction_complete: PredictionComplete,
                       max_beam_size: int) -> \
             List[Prediction]:
-        beam = BeamSearchSimple(beam_size=prompt.shape[1],
-                                prediction_complete=prediction_complete,
-                                max_beam_size=max_beam_size,
-                                rest=rest,
-                                state_updater=self.state_updater,
-                                probs=probs,
-                                is_token_by_token=self.is_token_by_token,
-                                itos=self.tokenizer.itos)
+        beam = BeamSearchWord(beam_size=prompt.shape[1],
+                              prediction_complete=prediction_complete,
+                              max_beam_size=max_beam_size,
+                              rest=rest,
+                              state_updater=self.state_updater,
+                              probs=probs,
+                              is_token_by_token=self.is_token_by_token,
+                              itos=self.tokenizer.itos,
+                              stoi=self.tokenizer.stoi)
 
         for _ in range(10):
             with monit.section('Predict', is_silent=True):
