@@ -52,15 +52,14 @@ class Predictor:
                       prediction_complete: PredictionComplete,
                       max_beam_size: int) -> \
             List[Prediction]:
-        beam = BeamSearchWord(beam_size=prompt.shape[1],
-                              prediction_complete=prediction_complete,
-                              max_beam_size=max_beam_size,
-                              rest=rest,
-                              state_updater=self.state_updater,
-                              probs=probs,
-                              is_token_by_token=self.is_token_by_token,
-                              itos=self.tokenizer.itos,
-                              stoi=self.tokenizer.stoi)
+        beam = BeamSearchSimple(beam_size=prompt.shape[1],
+                                prediction_complete=prediction_complete,
+                                max_beam_size=max_beam_size,
+                                rest=rest,
+                                state_updater=self.state_updater,
+                                probs=probs,
+                                is_token_by_token=self.is_token_by_token,
+                                itos=self.tokenizer.itos)
 
         for _ in range(10):
             with monit.section('Predict', is_silent=True):

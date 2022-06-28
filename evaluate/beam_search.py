@@ -8,7 +8,8 @@ from dataset import ID_CHARS
 from train import StateUpdater
 
 EPS_PROB = 1e-6
-MIN_BEAM_PROB = 1e-4
+# MIN_BEAM_PROB = 1e-4
+MIN_BEAM_PROB = 0
 
 
 class PredictionComplete:

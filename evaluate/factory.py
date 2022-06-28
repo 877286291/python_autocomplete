@@ -1,5 +1,6 @@
-from labml import experiment, lab
+from labml import experiment
 from labml.utils.pytorch import get_modules
+
 from evaluate import Predictor
 from train import Configs
 
@@ -16,7 +17,7 @@ def load_experiment() -> Configs:
     # And for latest checkpoint
     # checkpoint = None
 
-    run_uuid = '8e929d1fcc2f11eca22718c04d1fbab2'
+    run_uuid = 'c59e44d2f5fa11ec86914d76dbec21de'
     checkpoint = None
     # run_uuid, checkpoint = experiment.load_bundle(
     #     lab.get_path() / 'bundle.tar.gz',
