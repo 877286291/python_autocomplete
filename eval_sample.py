@@ -127,7 +127,7 @@ def main():
         project_name = str(file)
         sample_files = get_python_files(Path(lab.get_data_path() / 'pyart' / 'valid' / project_name))
         reg = re.compile(r'\S+\.\w+\(.*\)')
-        for _, sample_file in monit.enum("Process:", sample_files[0:2]):
+        for _, sample_file in monit.enum("Process:", sample_files):
             with open(str(sample_file), 'r', encoding='iso-8859-1') as f:
                 sample = f.read()
             # parsed = parse_string(sample)
