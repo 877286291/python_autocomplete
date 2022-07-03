@@ -256,27 +256,21 @@ def main():
     experiment.create(name="transformer state detach",
                       comment='pyart dataset')
     experiment.configs(conf, {
-        # 'model': 'transformer_model',
-        'model': 'transformer_xl_model',
-        # 'model': 'lstm_model',
+        'model': 'lstm_model',
         'n_layers': 6,
-        'epochs': 10,
+        'epochs': 16,
         'optimizer.optimizer': 'AdamW',
-        'optimizer.learning_rate': 1.25e-4,
+        'optimizer.learning_rate': 1.25e-3,
         'device.cuda_device': 0,
 
         'is_token_by_token': True,
-        # 'state_updater': 'transformer_memory',
-        # 'state_updater': 'lstm_state',
+        'state_updater': 'lstm_state',
         'mem_len': 256,
 
-        'text.is_shuffle': False,
+        'text.is_shuffle': True,
         'text.tokenizer': 'bpe',
-        'text.batch_size': 96,
+        'text.batch_size': 128,
         'text.seq_len': 256,
-        #
-        # 'inner_iterations': 10,
-        # 'text.truncate_data': 100_000,
     })
     experiment.add_pytorch_models(model=conf.model)
     with experiment.start():
