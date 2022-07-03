@@ -7,8 +7,8 @@ import torch.nn
 from evaluate.beam_search import PredictionComplete, BeamSearch
 from train import StateUpdater
 
-EPS_PROB = 1e-6
-MIN_BEAM_PROB = 1e-4
+EPS_PROB = 0
+MIN_BEAM_PROB = 0
 
 
 class BeamSearchWord(BeamSearch):
@@ -17,11 +17,9 @@ class BeamSearchWord(BeamSearch):
                  state_updater: 'StateUpdater',
                  probs: Optional[List[float]],
                  is_token_by_token: bool,
-                 itos: List[str],
-                 stoi: Dict[str, int]):
+                 itos: List[str]):
         super().__init__()
         self.itos = itos
-        self.stoi = stoi
         self.is_token_by_token = is_token_by_token
         self.state_updater = state_updater
         self.prediction_complete = prediction_complete
@@ -92,12 +90,7 @@ class BeamSearchWord(BeamSearch):
         self.probs = []
 
         for prob, (b, token) in self.beam_heap:
-            token_str, prob = self.word_filter(self.itos[token], prob)
-            if token_str == '':
-                continue
-            token = self.stoi[token_str]
             token = prompt.new_tensor([token])
-
             if self.is_token_by_token:
                 new_prompt.append(token)
             else:
@@ -132,7 +125,9 @@ class BeamSearchWord(BeamSearch):
                     continue
 
                 if self.prediction_complete(text, token_str):
-                    self._add_prediction_before_token(self.probs[b], b, old_state)
-                    break
+                    if not self._add_prediction_before_token(self.probs[b], b, old_state):
+                        break
+                    else:
+                        break
                 if not self._add_beam(self.probs[b] * tokens[token].item(), b, token):
                     break
