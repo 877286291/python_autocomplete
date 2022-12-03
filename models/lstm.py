@@ -17,6 +17,7 @@ class AttentionLayer(nn.Module):
         self.V_linear = nn.Linear(hidden_dim, hidden_dim, bias=False)
 
     def forward(self, inputs):
+        inputs = torch.permute(inputs, (1, 0, 2))
         Q = self.Q_linear(inputs)
         K = self.K_linear(inputs).permute(0, 2, 1)  # 先进行一次转置
         V = self.V_linear(inputs)

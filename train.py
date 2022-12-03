@@ -253,7 +253,7 @@ def _valid_loader(c: Configs):
 def main():
     conf = Configs()
     # Assign one of transformer_mode, lstm_model, or rhn_model
-    experiment.create(name="transformer state detach",
+    experiment.create(name="lstm attention",
                       comment='pyart dataset')
     experiment.configs(conf, {
         'model': 'lstm_model',
