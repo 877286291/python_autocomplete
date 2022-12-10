@@ -69,4 +69,4 @@ class LstmModel(AutoregressiveModel):
         # logit = self.fc(out)
 
         # return logit, (hn.detach(), cn.detach())
-        return outs, None
+        return outs, (hn.detach(), cn.detach())
