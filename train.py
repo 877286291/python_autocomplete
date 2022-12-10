@@ -39,6 +39,7 @@ class Configs(TrainValidConfigs):
     mem_len: int = 512
     grad_norm_clip: float = 1.0
     is_token_by_token: bool = False
+    round: int = 4
 
     def init(self):
         tracker.set_queue("loss.*", 20, True)
@@ -124,7 +125,8 @@ def lstm_model(c: Configs):
     m = LstmModel(n_tokens=c.n_tokens,
                   embedding_size=c.d_model,
                   hidden_size=c.rnn_size,
-                  n_layers=c.n_layers)
+                  n_layers=c.n_layers,
+                  round_=c.round)
     return m.to(c.device)
 
 
